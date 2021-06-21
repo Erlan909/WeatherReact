@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{ useState } from 'react'
+import Form from './component/Form/Form'
+import Output from './component/Output/Output'
+import { API, KEY } from './config'
+import './App.css'
 
-function App() {
+
+
+export default function App() {
+  const [data, setData] = useState()
+  const [val, setVal] = useState('')
+
+  const searchWeatherBYCity = async(event) => {
+    event.preventDefault()
+    let url = API+val+KEY
+    const req =await fetch(url)
+    const res = await req.json()
+    console.log(res);
+    setData(res)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     <Form
+     val={val}
+     setVal={setVal}
+     search={searchWeatherBYCity}
+
+     />
+     <Output
+     weather={data}
+  
+
+     />
+
     </div>
   );
 }
 
-export default App;
+
